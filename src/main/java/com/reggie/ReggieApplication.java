@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+//1380|4G85W1nIQLEFMmzxjQsltMLQnVThllkZqqXz5VJS
 @ServletComponentScan
 @SpringBootApplication
 @EnableTransactionManagement  //开启事务注解
