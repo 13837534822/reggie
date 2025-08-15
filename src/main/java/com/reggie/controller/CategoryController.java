@@ -51,14 +51,8 @@ public class CategoryController {
     }
 
     @GetMapping("/list")
-    public Result<List<Category>> list(Integer type) {
-        System.out.println("type:" + type);
+    public Result<List<Category>> list() {
         QueryWrapper<Category> wrapper = new QueryWrapper();
-        if (type != null) {
-            wrapper.eq("type", type);
-        } else {
-            return Result.error("type获取错误");
-        }
         List<Category> list = categoryService.list(wrapper);
         return Result.success(list);
     }

@@ -1,9 +1,11 @@
 package com.reggie.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.reggie.common.BaseContext;
 import com.reggie.common.Result;
 import com.reggie.dto.SetmealDto;
+import com.reggie.po.Setmeal;
 import com.reggie.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +39,13 @@ public class SetmealController {
         System.out.println(ids.toString());
         setmealService.deleteWithDish(ids);
         return Result.success("删除成功");
+    }
+
+    @GetMapping("/list")
+    public Result<List<Setmeal>> list( Setmeal setmeal) {
+        List<Setmeal> list = setmealService.list(new QueryWrapper<Setmeal>()
+                .eq("category_id", setmeal.getCategoryId())
+                .eq("status", setmeal.getStatus()));
+        return Result.success(list);
     }
 }

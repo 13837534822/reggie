@@ -26,6 +26,7 @@ public class WebInterceptorConfig implements WebMvcConfigurer {
         //拦截的
         List<String> stop = new ArrayList<>();
         stop.add("/backend/page/**");
+        stop.add("/front/page/**");
         registry.addInterceptor(loginInterceptor).addPathPatterns(stop).excludePathPatterns(pass);
     }
 }

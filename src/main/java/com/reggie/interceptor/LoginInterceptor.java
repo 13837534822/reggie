@@ -20,8 +20,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         if (request.getSession().getAttribute("employee") != null) {
-            System.out.println("已登录，放行");
+            System.out.println("后台已登录，放行");
             BaseContext.setCurrentId((Long) request.getSession().getAttribute("employee")); //将登陆者的ID放入多线程中
+            return true;
+        }
+        if(request.getSession().getAttribute("user")!=null){
+            System.out.println("前台已登录，放行");
+            BaseContext.setCurrentId((Long) request.getSession().getAttribute("user"));
             return true;
         }
         return false;
