@@ -8,6 +8,8 @@ import com.reggie.dto.SetmealDto;
 import com.reggie.po.Setmeal;
 import com.reggie.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ public class SetmealController {
     SetmealService setmealService;
 
     @PostMapping
+    @CacheEvict(value="setmealCache",allEntries = true)
     public Result<String> save(HttpServletRequest request, @RequestBody SetmealDto setmealDto) {
         BaseContext.setCurrentId((Long) request.getSession().getAttribute("employee"));
         setmealService.saveWithDish(setmealDto);
@@ -35,6 +38,7 @@ public class SetmealController {
     }
 
     @DeleteMapping
+    @CacheEvict(value="setmealCache",allEntries = true)
     public Result<String> delete(@RequestParam List<Long> ids) { //使用使用集合接收时候要加上@RequestParam
         System.out.println(ids.toString());
         setmealService.deleteWithDish(ids);
@@ -42,6 +46,7 @@ public class SetmealController {
     }
 
     @GetMapping("/list")
+    @Cacheable(value="setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
     public Result<List<Setmeal>> list( Setmeal setmeal) {
         List<Setmeal> list = setmealService.list(new QueryWrapper<Setmeal>()
                 .eq("category_id", setmeal.getCategoryId())
